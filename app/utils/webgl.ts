@@ -7,22 +7,27 @@ export async function initWebGL(canvas: HTMLCanvasElement) {
     antialias: true,
     powerPreference: "high-performance"
 });
+  const camera = new THREE.PerspectiveCamera(
+        75, 
+        canvas.clientWidth / canvas.clientHeight, 
+        0.1, 
+        1000);
+    camera.position.z = 3;
+
   const resizeCanvas = () => {
-    canvas.width = canvas.clientWidth
-    canvas.height = canvas.clientHeight;
+    const width = canvas.clientWidth;
+    const height = canvas.clientHeight;
+    canvas.width = width;
+    canvas.height = height;
     renderer.setClearColor(0x111111, 1);
-    renderer.setSize(canvas.width, canvas.height, false);
+    renderer.setSize(width, height, false);
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
   }
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(
-        75, 
-        canvas.width / canvas.height, 
-        0.1, 
-        1000);
-    camera.position.z = 3;
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
 
