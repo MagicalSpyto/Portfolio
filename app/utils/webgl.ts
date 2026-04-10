@@ -26,7 +26,7 @@ export async function initWebGL(canvas: HTMLCanvasElement) {
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
 
-    const PLYBuffer = await loadPLY("/imports/pointcloud.ply");
+    const PLYBuffer = await loadPLY("./imports/pointcloud.ply");
     const geometry = createBuffers(PLYBuffer);
     const material = new THREE.PointsMaterial({ 
         vertexColors: true, 

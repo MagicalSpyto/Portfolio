@@ -14,7 +14,7 @@ export default function WebGLRenderer() {
     if (!webgl) return;
 
     const handleResize = () => {
-      webgl.resizeCanvas();
+      //webgl.resizeCanvas();
     };
 
     window.addEventListener('resize', handleResize);
