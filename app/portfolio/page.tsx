@@ -32,7 +32,7 @@ export default function Portfolio() {
             return (
               <Link
                 key={project.slug}
-                href={`/portfolio/${project.slug}`}
+                href={`./portfolio/${project.slug}`}
                 className="group"
               >
                 <div className="h-full rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 bg-white border border-gray-200 hover:border-gray-300">
