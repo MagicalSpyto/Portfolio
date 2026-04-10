@@ -1,0 +1,5 @@
+1:"$Sreact.fragment"
+2:I[97367,["/_next/static/chunks/13h-0fd.p-1ga.js","/_next/static/chunks/0d3shmwh5_nmn.js"],"OutletBoundary"]
+3:"$Sreact.suspense"
+0:{"rsc":["$","$1","c",{"children":[["$","div",null,{"className":"text-center pt-12","children":[["$","h1",null,{"className":"text-4xl font-bold mb-6","children":"Hi, I'm Ede"}],["$","p",null,{"children":"Mediendesigninformatiker"}],["$","p",null,{"children":"I build interactive and engaging digital experiences, ranging from Webdevelopement to Immersive AR applications"}]]}],null,["$","$L2",null,{"children":["$","$3",null,{"name":"Next.MetadataOutlet","children":"$@4"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"OnYP9haH4n8kZtSReIjLD"}
+4:null
