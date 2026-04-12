@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
+:root {
+  --site-background: rgb(74, 84, 95);
+}
+
+html,
+body {
+  background-color: var(--site-background);
+}
+
 /* Typography - Headings */
 .heading-h1 {
   font-size: 3rem;
@@ -60,5 +69,4 @@
 .link-primary:hover {
   color: rgb(29 78 216);
 }
-
 

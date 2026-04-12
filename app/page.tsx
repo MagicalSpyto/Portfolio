@@ -1,11 +1,179 @@
-import Image from "next/image";
+import Link from "next/link";
 import { homeData } from "@/app/data/HomePage";
+import { projects } from "@/app/data/projects";
+import { projectData as bachelorData } from "@/app/data/BachelorProject";
+import { projectData as webDesignData } from "@/app/data/WebDesignProject";
+import FrontPageWebglRenderer from "@/app/components/lib/FrontPageWebglRenderer";
+
+// The homepage reuses the same project sources as the portfolio overview.
+const projectDataMap = {
+  bachelorproject: bachelorData,
+  webdesign: webDesignData,
+};
+
 export default function Home() {
   return (
-    <div className="text-center pt-12">
-      <h1 className="text-4xl font-bold mb-6">{homeData.hero.title}</h1>
-      <p>{homeData.hero.subtitle}</p>
-      <p>{homeData.hero.description}</p>
-    </div>
+    <main className="mx-auto flex w-full max-w-6xl flex-col gap-20 px-6 py-12 md:px-10 md:py-20">
+      {/* Hero: core identity, short positioning, and CTA placeholders. */}
+      <div className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden bg-black">
+      <div className="absolute inset-0 h-full w-full">
+        <FrontPageWebglRenderer />
+      </div>
+      <section className="relative z-10 mx-auto grid max-w-6xl gap-8 border-b px-6 py-6 md:grid-cols-[1.4fr_0.6fr] md:items-end md:px-10">
+        <div className="max-w-3xl">
+          <p className="mb-4 text-sm font-medium uppercase tracking-[0.2em] text-slate-300">
+            {homeData.hero.subtitle}
+          </p>
+          <h1 className="mb-6 text-4xl font-semibold tracking-tight text-slate-50 md:text-6xl">
+            {homeData.hero.title}
+          </h1>
+          <p className="max-w-2xl text-lg leading-8 text-slate-50 md:text-xl">
+            {homeData.hero.description}
+          </p>
+        </div>
+        {/* contact information and work intent */}
+        <div className="rounded-2xl border-2 border-slate-500/70 bg-slate-500/50 backdrop-blur-sm p-6">
+          <p className="text-sm font-medium uppercase tracking-[0.2em] text-slate-50">
+            Homepage intent
+          </p>
+          <p className="mt-4 text-sm leading-7 text-slate-50">
+            Im based in Germany and currently looking for work opportunities in a creative and collaborative environment. I am open to roles that allow me to leverage my skills in design and developement.
+          </p>
+          <div className="mt-6 flex flex-wrap gap-3 text-sm font-medium text-slate-700">
+            <p className="text-sm font-medium uppercase tracking-[0.2em] text-slate-50">
+              Contact
+            </p>
+            <span className="rounded-full bg-white px-4 py-2 ring-1 ring-slate-200">
+              {homeData.contact.primary}
+            </span>
+            <span className="rounded-full bg-white px-4 py-2 ring-1 ring-slate-200">
+              {homeData.contact.secondary}
+            </span>
+          </div>
+        </div>
+      </section>
+      </div>
+
+      {/* Selected work: uses dynamic project data instead of homepage-only placeholders. */}
+      <section className="grid gap-8">
+        <div className="max-w-3xl">
+          <p className="mb-3 text-sm font-medium uppercase tracking-[0.2em] text-slate-500">
+            {homeData.selectedWork.eyebrow}
+          </p>
+          <h2 className="text-3xl font-semibold tracking-tight text-slate-900">
+            {homeData.selectedWork.title}
+          </h2>
+          <p className="mt-4 text-base leading-7 text-slate-600">
+            {homeData.selectedWork.description}
+          </p>
+        </div>
+
+        <div className="grid gap-4 md:grid-cols-2">
+          {projects.map((project) => {
+            // Each slug is resolved to the detailed project content used by the portfolio pages.
+            const data = projectDataMap[project.slug as keyof typeof projectDataMap];
+            if (!data) return null;
+
+            return (
+              <Link
+                key={project.slug}
+                href={`/portfolio/${project.slug}`}
+                className="group rounded-2xl border border-slate-200 p-6 transition-colors hover:border-slate-300"
+              >
+                <p className="text-xs font-medium uppercase tracking-[0.2em] text-slate-400">
+                  {data.duration}
+                </p>
+                <h3 className="mt-4 text-xl font-semibold text-slate-900">
+                  {data.title}
+                </h3>
+                <p className="mt-2 text-sm font-medium text-slate-500">
+                  {data.subtitle}
+                </p>
+                <p className="mt-4 text-sm leading-7 text-slate-600">
+                  {data.description}
+                </p>
+                <div className="mt-6 flex flex-wrap gap-2">
+                  {data.technologies.map((technology) => (
+                    <span
+                      key={technology}
+                      className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700"
+                    >
+                      {technology}
+                    </span>
+                  ))}
+                </div>
+                <p className="mt-6 text-sm font-medium text-slate-900">
+                  View case study
+                </p>
+              </Link>
+            );
+          })}
+        </div>
+
+        <div>
+          <Link
+            href="/portfolio"
+            className="inline-flex items-center text-sm font-medium text-slate-900 transition-opacity hover:opacity-70"
+          >
+            View all projects
+          </Link>
+        </div>
+      </section>
+
+      {/* Technical focus: grouped capability areas instead of a long skill list. */}
+      <section className="grid gap-8">
+        <div className="max-w-3xl">
+          <p className="mb-3 text-sm font-medium uppercase tracking-[0.2em] text-slate-500">
+            {homeData.technicalFocus.eyebrow}
+          </p>
+          <h2 className="text-3xl font-semibold tracking-tight text-slate-900">
+            {homeData.technicalFocus.title}
+          </h2>
+        </div>
+
+        <div className="grid gap-4 md:grid-cols-2">
+          {homeData.technicalFocus.items.map((item) => (
+            <article
+              key={item.title}
+              className="rounded-2xl border border-slate-200 bg-white p-6"
+            >
+              <h3 className="text-lg font-semibold text-slate-900">{item.title}</h3>
+              <p className="mt-3 text-sm leading-7 text-slate-600">
+                {item.description}
+              </p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      {/* Contact: final conversion section with primary contact and supporting links. */}
+      <section className="rounded-3xl border border-slate-200 bg-slate-50 p-8 md:p-10">
+        <p className="mb-3 text-sm font-medium uppercase tracking-[0.2em] text-slate-500">
+          {homeData.contact.eyebrow}
+        </p>
+        <h2 className="text-3xl font-semibold tracking-tight text-slate-900">
+          {homeData.contact.title}
+        </h2>
+        <p className="mt-4 max-w-2xl text-base leading-7 text-slate-600">
+          {homeData.contact.description}
+        </p>
+        <div className="mt-8 grid gap-4 md:grid-cols-2">
+          <div className="rounded-2xl bg-white p-5 ring-1 ring-slate-200">
+            <p className="text-xs font-medium uppercase tracking-[0.2em] text-slate-400">
+              Primary contact
+            </p>
+            <p className="mt-3 text-sm text-slate-700">{homeData.contact.primary}</p>
+          </div>
+          <div className="rounded-2xl bg-white p-5 ring-1 ring-slate-200">
+            <p className="text-xs font-medium uppercase tracking-[0.2em] text-slate-400">
+              Supporting links
+            </p>
+            <p className="mt-3 text-sm text-slate-700">
+              {homeData.contact.secondary}
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
   );
 }
