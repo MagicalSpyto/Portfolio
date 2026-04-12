@@ -3,6 +3,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { PLYLoader } from 'three/examples/jsm/loaders/PLYLoader.js';
 
 export async function initWebGL(canvas: HTMLCanvasElement) {
+  console.log("Initializing WebGL...");
   const renderer = new THREE.WebGLRenderer({ 
     canvas, 
     antialias: true,
@@ -31,9 +32,9 @@ export async function initWebGL(canvas: HTMLCanvasElement) {
     const scene = new THREE.Scene();
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
-
+    console.log("Loading point cloud...");
     const loader = new PLYLoader();
-    loader.load('/imports/pointcloud.ply', (geometry) => {
+    loader.load('../imports/pointcloud.ply', (geometry) => {
         geometry.scale(1, -1, 1); // Invert Y axis if needed
         const material = new THREE.PointsMaterial({ 
             vertexColors: true, 
