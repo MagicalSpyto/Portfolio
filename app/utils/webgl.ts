@@ -36,9 +36,10 @@ export async function initWebGL(canvas: HTMLCanvasElement) {
     const loader = new PLYLoader();
     loader.load('../imports/pointcloud.ply', (geometry) => {
         geometry.scale(1, -1, 1); // Invert Y axis if needed
+        geometry.translate(-0.2, -0.5, 0); // Center the point cloud
         const material = new THREE.PointsMaterial({ 
             vertexColors: true, 
-            size: 0.01 });
+            size: 0.025 });
         const points = new THREE.Points(geometry, material);
         scene.add(points);
 
