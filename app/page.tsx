@@ -15,7 +15,7 @@ export default function Home() {
   return (
     <main className="mx-auto flex w-full max-w-6xl flex-col gap-20 px-6 py-12 md:px-10 md:py-20">
       {/* Hero: core identity, short positioning, and CTA placeholders. */}
-      <div className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden bg-black">
+      <div className="relative left-1/2 -translate-x-1/2 overflow-hidden bg-black" style={{ width: "calc(100vw - var(--scrollbar-width, 0px))" }}>
       <div className="absolute inset-0 h-full w-full">
         <FrontPageWebglRenderer />
       </div>
@@ -32,29 +32,31 @@ export default function Home() {
           </p>
         </div>
         {/* contact information and work intent */}
-        <div className="rounded-2xl border-2 border-slate-500/70 bg-slate-500/50 backdrop-blur-sm p-6">
+        <div className="rounded-2xl border-2 border-slate-500/70 bg-slate-500/30 backdrop-blur-sm p-6">
           <p className="text-sm font-medium uppercase tracking-[0.2em] text-slate-50">
-            Homepage intent
+            About me
           </p>
           <p className="mt-4 text-sm leading-7 text-slate-50">
             Im based in Germany and currently looking for work opportunities in a creative and collaborative environment. I am open to roles that allow me to leverage my skills in design and developement.
           </p>
-          <div className="mt-6 flex flex-wrap gap-3 text-sm font-medium text-slate-700">
+          <div className="mt-6 text-sm font-medium text-slate-700">
             <p className="text-sm font-medium uppercase tracking-[0.2em] text-slate-50">
               Contact
             </p>
-            <span className="rounded-full bg-white px-4 py-2 ring-1 ring-slate-200">
-              {homeData.contact.primary}
-            </span>
-            <span className="rounded-full bg-white px-4 py-2 ring-1 ring-slate-200">
-              {homeData.contact.secondary}
-            </span>
+            <div className="mt-3 flex flex-wrap gap-3">
+              <span className="rounded-full bg-white px-4 py-2 ring-1 ring-slate-200">
+                {homeData.contact.primary}
+              </span>
+              <span className="rounded-full bg-white px-4 py-2 ring-1 ring-slate-200">
+                {homeData.contact.secondary}
+              </span>
+            </div>
           </div>
         </div>
       </section>
       </div>
 
-      {/* Selected work: uses dynamic project data instead of homepage-only placeholders. */}
+      {/* Selected work: uses dynamic project data*/}
       <section className="grid gap-8">
         <div className="max-w-3xl">
           <p className="mb-3 text-sm font-medium uppercase tracking-[0.2em] text-slate-500">
@@ -78,7 +80,7 @@ export default function Home() {
               <Link
                 key={project.slug}
                 href={`/portfolio/${project.slug}`}
-                className="group rounded-2xl border border-slate-200 p-6 transition-colors hover:border-slate-300"
+                className="group rounded-2xl p-6 transition-color bg-amber-400"
               >
                 <p className="text-xs font-medium uppercase tracking-[0.2em] text-slate-400">
                   {data.duration}
@@ -135,7 +137,7 @@ export default function Home() {
           {homeData.technicalFocus.items.map((item) => (
             <article
               key={item.title}
-              className="rounded-2xl border border-slate-200 bg-white p-6"
+              className="rounded-2xl bg-amber-400 p-6"
             >
               <h3 className="text-lg font-semibold text-slate-900">{item.title}</h3>
               <p className="mt-3 text-sm leading-7 text-slate-600">
@@ -147,7 +149,7 @@ export default function Home() {
       </section>
 
       {/* Contact: final conversion section with primary contact and supporting links. */}
-      <section className="rounded-3xl border border-slate-200 bg-slate-50 p-8 md:p-10">
+      <section className="rounded-3xl bg-amber-400 p-8 md:p-10">
         <p className="mb-3 text-sm font-medium uppercase tracking-[0.2em] text-slate-500">
           {homeData.contact.eyebrow}
         </p>
