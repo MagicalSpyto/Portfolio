@@ -25,7 +25,7 @@ export function initWebGL(canvas: HTMLCanvasElement): WebGLFrontPageController {
 	camera.position.set(0, 0, 3);
 
 	// Simulation constants for point count, movement speed, and lifetime range.
-	const GRID_POINTS_PER_SIDE = 100;
+	const GRID_POINTS_PER_SIDE = 300;
 	const GRID_HALF_SIZE = 0.5;
     //the grid size is used to scale the mouse curser influence range, since teh grid is normalized to [-0.5, 0.5], the influence redius should be scaled bs a consistent factor to allow the rest of teh scaling operations like speed to have a reference unit.
     const GRID_SIZE = 100;

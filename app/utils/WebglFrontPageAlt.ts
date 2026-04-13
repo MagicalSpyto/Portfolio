@@ -1,5 +1,7 @@
 import * as THREE from 'three';
 
+// Initializes and controls the animated front-page particle field.
+
 // Public controls used by the React wrapper component.
 type WebGLFrontPageController = {
 	resizeCanvas: () => void;
@@ -28,26 +30,27 @@ export function initWebGL(canvas: HTMLCanvasElement): WebGLFrontPageController {
 	// GRID_SIZE provides a stable reference scale for motion while the field itself lives in [-0.5, 0.5].
 	const GRID_SIZE = 100;
 	// The target spacing is converted into a point count from the current canvas area.
-	const TARGET_POINT_SPACING_PX = 20;
+	const TARGET_POINT_SPACING_PX = 50;
 	const MIN_POINT_COUNT = 250;
-	const MAX_POINT_COUNT = 6000;
+	const MAX_POINT_COUNT = 15000;
 	// Particle motion is still simulated in normalized space and later scaled to the viewport.
-	const POINT_SPEED = 50 / GRID_SIZE;
+	const POINT_SPEED = 20 / GRID_SIZE;
 	// Link distance is measured in pixels so it stays visually consistent across aspect ratios.
-	const LINK_DISTANCE_PX = 70;
-	const MAX_LINE_OPACITY = 0.28;
+	const LINK_DISTANCE_PX = 100;
+	const MAX_LINE_OPACITY = 0.5;
 	const MIN_LIFETIME_SECONDS = 2;
-	const MAX_LIFETIME_SECONDS = 6;
+	const MAX_LIFETIME_SECONDS = 10;
+	const LIFETIME_FADE_PORTION = 0.2;
 	const MAX_SPAWN_ATTEMPTS = 24;
 	const SPAWN_OUTSIDE_PADDING_PX = 6;
 	// Cap the line buffer to keep GPU uploads bounded on large screens.
-	const MAX_LINE_SEGMENTS = 100000;
+	const MAX_LINE_SEGMENTS = 150000;
 
 	// Mouse location in normalized grid space: [-0.5, 0.5] for both axes.
 	const mouseLocation = { x: 0, y: 0, inside: false };
 	// Mouse influence radius in pixels
-	const mouseInfluenceRadiusPX = 70;
-	const repellingFactor = 3;
+	const mouseInfluenceRadiusPX = 120;
+	const repellingFactor = 0.7;
 
 	// Position buffer storing every point coordinate (x, y, z).
 	const geometry = new THREE.BufferGeometry();
@@ -57,6 +60,20 @@ export function initWebGL(canvas: HTMLCanvasElement): WebGLFrontPageController {
 	let pointVelocities = new Float32Array(0);
 	let pointAges = new Float32Array(0);
 	let pointLifetimes = new Float32Array(0);
+	let pointAlphas = new Float32Array(0);
+	let pointAlphaAttribute = new THREE.BufferAttribute(pointAlphas, 1);
+	geometry.setAttribute('alpha', pointAlphaAttribute);
+
+	// Fade points in at birth and out right before respawn.
+	const getLifetimeFadeAlpha = (age: number, lifetime: number) => {
+		const safeLifetime = Math.max(lifetime, 0.0001);
+		const t = THREE.MathUtils.clamp(age / safeLifetime, 0, 1);
+		const fadeWindow = Math.min(LIFETIME_FADE_PORTION, 0.5);
+		if (fadeWindow <= 0) return 1;
+		const fadeIn = THREE.MathUtils.clamp(t / fadeWindow, 0, 1);
+		const fadeOut = THREE.MathUtils.clamp((1 - t) / fadeWindow, 0, 1);
+		return Math.min(fadeIn, fadeOut);
+	};
 
 	// Returns a random lifetime in seconds inside the configured range.
 	const randomLifetime = () =>
@@ -120,6 +137,7 @@ export function initWebGL(canvas: HTMLCanvasElement): WebGLFrontPageController {
 
 		pointAges[i] = 0;
 		pointLifetimes[i] = randomLifetime();
+		pointAlphas[i] = 0;
 	};
 
 	// Resizes the particle buffers while preserving existing state so viewport changes do not reshuffle the field.
@@ -128,6 +146,7 @@ export function initWebGL(canvas: HTMLCanvasElement): WebGLFrontPageController {
 		const previousVelocities = pointVelocities;
 		const previousAges = pointAges;
 		const previousLifetimes = pointLifetimes;
+		const previousAlphas = pointAlphas;
 		const preservedPointCount = Math.min(positionAttribute.count, pointCount);
 
 		positionAttribute = new THREE.BufferAttribute(new Float32Array(pointCount * 3), 3);
@@ -136,6 +155,10 @@ export function initWebGL(canvas: HTMLCanvasElement): WebGLFrontPageController {
 		pointVelocities = new Float32Array(pointCount * 3);
 		pointAges = new Float32Array(pointCount);
 		pointLifetimes = new Float32Array(pointCount);
+		pointAlphas = new Float32Array(pointCount);
+		pointAlphaAttribute = new THREE.BufferAttribute(pointAlphas, 1);
+		pointAlphaAttribute.setUsage(THREE.DynamicDrawUsage);
+		geometry.setAttribute('alpha', pointAlphaAttribute);
 
 		// Copy the overlapping prefix so existing points keep their motion and lifetime state.
 		if (preservedPointCount > 0) {
@@ -143,6 +166,7 @@ export function initWebGL(canvas: HTMLCanvasElement): WebGLFrontPageController {
 			pointVelocities.set(previousVelocities.subarray(0, preservedPointCount * 3));
 			pointAges.set(previousAges.subarray(0, preservedPointCount));
 			pointLifetimes.set(previousLifetimes.subarray(0, preservedPointCount));
+			pointAlphas.set(previousAlphas.subarray(0, preservedPointCount));
 		}
 
 		// Only new trailing slots are randomized when the screen grows.
@@ -151,13 +175,40 @@ export function initWebGL(canvas: HTMLCanvasElement): WebGLFrontPageController {
 		}
 
 		positionAttribute.needsUpdate = true;
+		pointAlphaAttribute.needsUpdate = true;
 	};
 
 	// Visual style for each particle.
-	const material = new THREE.PointsMaterial({
-		color: 0x60a5fa,
-		size: 0.02,
-		sizeAttenuation: true,
+	const material = new THREE.ShaderMaterial({
+		transparent: true,
+		depthWrite: false,
+		uniforms: {
+			uColor: { value: new THREE.Color(0xffffff) },
+			uSize: { value: 2.5 },
+		},
+		vertexShader: `
+			attribute float alpha;
+			uniform float uSize;
+			varying float vAlpha;
+
+			void main() {
+				vAlpha = alpha;
+				vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+				gl_Position = projectionMatrix * mvPosition;
+				gl_PointSize = uSize;
+			}
+		`,
+		fragmentShader: `
+			uniform vec3 uColor;
+			varying float vAlpha;
+
+			void main() {
+				vec2 centered = gl_PointCoord - vec2(0.5);
+				float dist = length(centered);
+				if (dist > 0.5) discard;
+				gl_FragColor = vec4(uColor, vAlpha);
+			}
+		`,
 	});
 
 	// Render the whole point cloud as one drawable object.
@@ -180,7 +231,7 @@ export function initWebGL(canvas: HTMLCanvasElement): WebGLFrontPageController {
 		transparent: true,
 		depthWrite: false,
 		uniforms: {
-			uColor: { value: new THREE.Color(0x60a5fa) },
+			uColor: { value: new THREE.Color(0xffffff) },
 		},
 		// Alpha is carried per vertex so each segment can fade based on its current distance.
 		vertexShader: `
@@ -239,6 +290,7 @@ export function initWebGL(canvas: HTMLCanvasElement): WebGLFrontPageController {
 	resizeCanvas();
 
 	const handlePointerMove = (event: PointerEvent) => {
+		// Convert the pointer position into canvas-local normalized coordinates.
 		let windowRect = canvas.getBoundingClientRect();
 		if (!windowRect.width || !windowRect.height) return;
 
@@ -254,6 +306,7 @@ export function initWebGL(canvas: HTMLCanvasElement): WebGLFrontPageController {
 		mouseLocation.y = -(normalizedY - 0.5);
 	};
 
+	// Stop mouse repulsion when the pointer leaves the browser window.
 	const handleWindowPointerLeave = () => {
 		mouseLocation.inside = false;
 	};
@@ -263,6 +316,7 @@ export function initWebGL(canvas: HTMLCanvasElement): WebGLFrontPageController {
 		const cellSizeX = LINK_DISTANCE_PX / Math.max(windowSizeX, 1);
 		const cellSizeY = LINK_DISTANCE_PX / Math.max(windowSizeY, 1);
 		const linkDistanceSquaredPx = LINK_DISTANCE_PX * LINK_DISTANCE_PX;
+		const mouseLinkDistanceSquaredPx = mouseInfluenceRadiusPX * mouseInfluenceRadiusPX;
 		const cells = new Map<string, number[]>();
 
 		// Bucket points into nearby cells so each particle only checks local neighbors.
@@ -289,6 +343,8 @@ export function initWebGL(canvas: HTMLCanvasElement): WebGLFrontPageController {
 			const positionIndex = i * 3;
 			const x1 = positionAttribute.array[positionIndex];
 			const y1 = positionAttribute.array[positionIndex + 1];
+			const pointAlpha1 = pointAlphas[i];
+			if (pointAlpha1 <= 0) continue;
 			const baseCellX = Math.floor((x1 + GRID_HALF_SIZE) / cellSizeX);
 			const baseCellY = Math.floor((y1 + GRID_HALF_SIZE) / cellSizeY);
 
@@ -309,6 +365,8 @@ export function initWebGL(canvas: HTMLCanvasElement): WebGLFrontPageController {
 						const j3 = j * 3;
 						const x2 = positionAttribute.array[j3];
 						const y2 = positionAttribute.array[j3 + 1];
+						const pointAlpha2 = pointAlphas[j];
+						if (pointAlpha2 <= 0) continue;
 						const dxPx = (x2 - x1) * windowSizeX;
 						const dyPx = (y2 - y1) * windowSizeY;
 						const distanceSquaredPx = dxPx * dxPx + dyPx * dyPx;
@@ -317,7 +375,9 @@ export function initWebGL(canvas: HTMLCanvasElement): WebGLFrontPageController {
 						// Fade links as they approach the maximum allowed distance.
 						const distancePx = Math.sqrt(distanceSquaredPx);
 						const normalizedDistance = distancePx / LINK_DISTANCE_PX;
-						const alpha = (1 - normalizedDistance) * MAX_LINE_OPACITY;
+						const lifetimeAlpha = Math.min(pointAlpha1, pointAlpha2);
+						const alpha = (1 - normalizedDistance) * MAX_LINE_OPACITY * lifetimeAlpha;
+						if (alpha <= 0) continue;
 
 						const target = segmentCount * 6;
 						const alphaTarget = segmentCount * 2;
@@ -335,6 +395,41 @@ export function initWebGL(canvas: HTMLCanvasElement): WebGLFrontPageController {
 			}
 		}
 
+		// Treat the cursor as an extra anchor point and connect nearby particles to it.
+		if (mouseLocation.inside && segmentCount < MAX_LINE_SEGMENTS) {
+			for (let i = 0; i < positionAttribute.count; i += 1) {
+				if (segmentCount >= MAX_LINE_SEGMENTS) break;
+
+				const pointIndex = i * 3;
+				const x = positionAttribute.array[pointIndex];
+				const y = positionAttribute.array[pointIndex + 1];
+				const pointAlpha = pointAlphas[i];
+				if (pointAlpha <= 0) continue;
+
+				const dxPx = (x - mouseLocation.x) * windowSizeX;
+				const dyPx = (y - mouseLocation.y) * windowSizeY;
+				const distanceSquaredPx = dxPx * dxPx + dyPx * dyPx;
+				if (distanceSquaredPx > mouseLinkDistanceSquaredPx) continue;
+
+				const distancePx = Math.sqrt(distanceSquaredPx);
+				const normalizedDistance = distancePx / mouseInfluenceRadiusPX;
+				const alpha = (1 - normalizedDistance) * MAX_LINE_OPACITY * pointAlpha;
+				if (alpha <= 0) continue;
+
+				const target = segmentCount * 6;
+				const alphaTarget = segmentCount * 2;
+				linePositions[target] = mouseLocation.x;
+				linePositions[target + 1] = mouseLocation.y;
+				linePositions[target + 2] = 0;
+				linePositions[target + 3] = x;
+				linePositions[target + 4] = y;
+				linePositions[target + 5] = 0;
+				lineAlphas[alphaTarget] = alpha;
+				lineAlphas[alphaTarget + 1] = alpha;
+				segmentCount += 1;
+			}
+		}
+
 		lineGeometry.setDrawRange(0, segmentCount * 2);
 		linePositionAttribute.needsUpdate = true;
 		lineAlphaAttribute.needsUpdate = true;
@@ -348,6 +443,7 @@ export function initWebGL(canvas: HTMLCanvasElement): WebGLFrontPageController {
 	let lastTime = performance.now();
 
 	const animate = () => {
+		// Schedule next frame first to keep the loop alive even if this frame exits early.
 		frameId = window.requestAnimationFrame(animate);
 		const now = performance.now();
 		const delta = (now - lastTime) / 1000;
@@ -360,22 +456,22 @@ export function initWebGL(canvas: HTMLCanvasElement): WebGLFrontPageController {
 
 			if (pointAges[i] >= pointLifetimes[i]) {
 				respawnPoint(i);
+				pointAlphas[i] = 0;
 				continue;
 			}
-			// Placeholder for future pointer interaction while keeping the current state plumbing in place.
+
 			let influenceX = 0;
 			let influenceY = 0;
 			if (mouseLocation.inside) {
-				//calculate distance from mouse to point in pixels, if it's within the influence radius, apply a force to the point velocity that is stronger the closer it is to the mouse, and also scaled by the configured point speed and delta time. The influence should be applied in the direction away from the mouse cursor to create a repulsion effect.
+				// Apply a simple repulsion force when the particle is inside the mouse influence radius.
 				const distanceX = (positionAttribute.array[pointIndex] - mouseLocation.x) * windowSizeX;
 				const distanceY = (positionAttribute.array[pointIndex + 1] - mouseLocation.y) * windowSizeY;
 				if(mouseInfluenceRadiusPX > Math.sqrt(distanceX * distanceX + distanceY * distanceY)){
-					influenceX = -(mouseLocation.x - positionAttribute.array[pointIndex]);
-					influenceY = -(mouseLocation.y - positionAttribute.array[pointIndex + 1]);
+					influenceX = (mouseLocation.x - positionAttribute.array[pointIndex]);
+					influenceY = (mouseLocation.y - positionAttribute.array[pointIndex + 1]);
 				}
-				//possible logic for moudse interaction
 			}
-			// Integrate movement using velocity and frame delta.
+			// Integrate drift velocity first, then add local mouse-driven offset.
 			let x = positionAttribute.array[pointIndex];
 			let y = positionAttribute.array[pointIndex + 1];
 
@@ -384,10 +480,13 @@ export function initWebGL(canvas: HTMLCanvasElement): WebGLFrontPageController {
 
 			positionAttribute.array[pointIndex] = x + influenceX * delta * repellingFactor;
 			positionAttribute.array[pointIndex + 1] = y + influenceY * delta * repellingFactor;
+
+			pointAlphas[i] = getLifetimeFadeAlpha(pointAges[i], pointLifetimes[i]);
 		}
 
 		// Tell Three.js to upload the modified position buffer to the GPU.
 		positionAttribute.needsUpdate = true;
+		pointAlphaAttribute.needsUpdate = true;
 		rebuildProximityLines();
 
 		renderer.render(scene, camera);

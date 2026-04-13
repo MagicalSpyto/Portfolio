@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import { initWebGL } from '@/app/utils/WebglFrontPageAlt';
+//import { initWebGL } from '@/app/utils/WebglFrontPage';
 
 export default function FrontPageWebglRenderer() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -47,7 +48,7 @@ export default function FrontPageWebglRenderer() {
     <canvas
       ref={canvasRef}
       aria-hidden="true"
-      className="h-full w-full"
+      className="h-full w-full bg-slate-900"
     />
   );
 }

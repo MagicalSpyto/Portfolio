@@ -1,8 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --site-background: rgb(16, 71, 38);
-  --scrollbar-width: 0px;
+  --site-background: #3c424b;
 }
 
 html,

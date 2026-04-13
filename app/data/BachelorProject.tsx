@@ -2,6 +2,7 @@
     title: "Bachelor Project",
     subtitle: "Multi-Device Environment Reconstruction for Augmented Reality Collaboration",
     description: "This project focuses on scanning an environment for augmented reality collaboration, addressing the challenge of seamless interaction across multiple devices.",
+    thumbnail: "/imports/PointcloudImage.png",
     duration: "3 Months",
     technologies: ["Unreal Engine", "C++", "COLMAP", "OpenXR"],
     sections: {
