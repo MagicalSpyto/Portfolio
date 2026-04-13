@@ -6,7 +6,7 @@
 
 html,
 body {
-  background-color: var(--site-background);
+  background-color: var(--color-slate-700);
 }
 
 /* Typography - Headings */

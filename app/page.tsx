@@ -16,7 +16,7 @@ export default function Home() {
   return (
     <main className="mx-auto flex w-full flex-col">
       {/* Hero: core identity, short positioning, and CTA placeholders. */}
-      <div className="relative min-h-150 h-screen left-1/2 -translate-x-1/2 overflow-hidden" style={{ width: "calc(100vw - var(--scrollbar-width, 0px))" }}>
+      <div className="relative min-h-150 h-screen left-1/2 -translate-x-1/2" style={{ width: "calc(100vw - var(--scrollbar-width, 0px))" }}>
         <div className="absolute inset-0 h-full w-full">
           <FrontPageWebglRenderer />
         </div>
@@ -55,22 +55,22 @@ export default function Home() {
             </div>
           </div>
         </section>
-        <ContinueButton />
+        <ContinueButton targetId="selected-work" />
       </div>
       {/* Spacer to build a visual separation */}
-      <div className="h-10 w-full bg-slate-50 ">
+      <div className="h-10 w-full bg-slate-100 ">
 
       </div>
       {/* Selected work: uses dynamic project data*/}
-      <section className="grid gap-8 pt-8 px-6 max-w-7xl mx-auto">
+      <section id="selected-work" className="grid gap-8 pt-8 px-6 max-w-7xl mx-auto">
         <div className="max-w-3xl">
-          <p className="mb-3 text-sm font-medium uppercase tracking-[0.2em] text-slate-500">
+          <p className="mb-3 text-sm font-medium uppercase tracking-[0.2em] text-slate-400">
             {homeData.selectedWork.eyebrow}
           </p>
-          <h2 className="text-3xl font-semibold tracking-tight text-slate-900">
+          <h2 className="text-3xl font-semibold tracking-tight text-slate-100">
             {homeData.selectedWork.title}
           </h2>
-          <p className="mt-4 text-base leading-7 text-slate-600">
+          <p className="mt-4 text-base leading-7 text-slate-400">
             {homeData.selectedWork.description}
           </p>
         </div>
@@ -136,7 +136,7 @@ export default function Home() {
       </section>
 
       {/* Technical focus: grouped capability areas instead of a long skill list. */}
-      <section className="grid gap-8">
+      <section className="grid gap-8 max-w-7xl mx-auto pb-8">
         <div className="max-w-3xl">
           <p className="mb-3 text-sm font-medium uppercase tracking-[0.2em] text-slate-500">
             {homeData.technicalFocus.eyebrow}
@@ -150,7 +150,7 @@ export default function Home() {
           {homeData.technicalFocus.items.map((item) => (
             <article
               key={item.title}
-              className="rounded-2xl bg-amber-400 p-6"
+              className="rounded-2xl bg-slate-100 p-6"
             >
               <h3 className="text-lg font-semibold text-slate-900">{item.title}</h3>
               <p className="mt-3 text-sm leading-7 text-slate-600">
@@ -162,7 +162,7 @@ export default function Home() {
       </section>
 
       {/* Contact: final conversion section with primary contact and supporting links. */}
-      <section className="rounded-3xl bg-amber-400 p-8 md:p-10">
+      <section className=" bg-slate-100 p-8 md:p-10">
         <p className="mb-3 text-sm font-medium uppercase tracking-[0.2em] text-slate-500">
           {homeData.contact.eyebrow}
         </p>
