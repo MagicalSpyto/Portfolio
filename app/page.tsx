@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { homeData } from "@/app/data/HomePage";
 import { projects } from "@/app/data/projects";
+import ContinueButton from "@/app/components/layout/continueButton";
 import { projectData as bachelorData } from "@/app/data/BachelorProject";
 import { projectData as webDesignData } from "@/app/data/WebDesignProject";
 import FrontPageWebglRenderer from "@/app/components/lib/FrontPageWebglRenderer";
@@ -13,7 +14,7 @@ const projectDataMap = {
 
 export default function Home() {
   return (
-    <main className="mx-auto flex w-full max-w-6xl flex-col gap-20 px-6 md:px-10">
+    <main className="mx-auto flex w-full flex-col">
       {/* Hero: core identity, short positioning, and CTA placeholders. */}
       <div className="relative min-h-150 h-screen left-1/2 -translate-x-1/2 overflow-hidden" style={{ width: "calc(100vw - var(--scrollbar-width, 0px))" }}>
         <div className="absolute inset-0 h-full w-full">
@@ -44,20 +45,24 @@ export default function Home() {
                 Contact
               </p>
               <div className="mt-3 flex flex-wrap gap-3">
-                <span className="rounded-full bg-white px-4 py-2 ring-1 ring-slate-200">
+                <span className="rounded-full bg-white px-4 py-2 ring-1 ring-slate-200 shadow-xl">
                   {homeData.contact.primary}
                 </span>
-                <span className="rounded-full bg-white px-4 py-2 ring-1 ring-slate-200">
+                <span className="rounded-full bg-white px-4 py-2 ring-1 ring-slate-200 shadow-xl">
                   {homeData.contact.secondary}
                 </span>
               </div>
             </div>
           </div>
         </section>
+        <ContinueButton />
       </div>
+      {/* Spacer to build a visual separation */}
+      <div className="h-10 w-full bg-slate-50 ">
 
+      </div>
       {/* Selected work: uses dynamic project data*/}
-      <section className="grid gap-8">
+      <section className="grid gap-8 pt-8 px-6 max-w-7xl mx-auto">
         <div className="max-w-3xl">
           <p className="mb-3 text-sm font-medium uppercase tracking-[0.2em] text-slate-500">
             {homeData.selectedWork.eyebrow}
