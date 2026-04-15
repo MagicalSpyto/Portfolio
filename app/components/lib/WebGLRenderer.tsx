@@ -11,17 +11,16 @@ export default function WebGLRenderer() {
     if (!canvas) return;
 
     const webgl = initWebGL(canvas);
-    if (!webgl) return;
 
     const handleResize = () => {
-      //webgl.resizeCanvas();
+      webgl.resizeCanvas();
     };
 
     window.addEventListener('resize', handleResize);
 
     return () => {
       window.removeEventListener('resize', handleResize);
-      //webgl.cleanup();
+      webgl.cleanup();
     };
   }, []);
   return (

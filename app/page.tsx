@@ -62,8 +62,8 @@ export default function Home() {
 
       </div>
       {/* Selected work: uses dynamic project data*/}
-      <section id="selected-work" className="grid gap-8 pt-8 px-6 max-w-7xl mx-auto">
-        <div className="max-w-3xl">
+      <section id="selected-work" className="grid gap-8 pt-8 mx-auto bg-gradient-to-b from-slate-950 to-slate-900/0">
+        <div className="max-w-3xl px-12 mx-auto">
           <p className="mb-3 text-sm font-medium uppercase tracking-[0.2em] text-slate-400">
             {homeData.selectedWork.eyebrow}
           </p>
@@ -75,7 +75,7 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-2">
+        <div className="grid gap-4 md:grid-cols-2 px-12">
           {projects.map((project) => {
             // Each slug is resolved to the detailed project content used by the portfolio pages.
             const data = projectDataMap[project.slug as keyof typeof projectDataMap];
@@ -91,7 +91,7 @@ export default function Home() {
                   className="absolute inset-0 bg-cover bg-center bg-no-repeat"
                   style={{ backgroundImage: `url(${data.thumbnail})` }}
                 />
-                <div className="absolute inset-0 bg-slate-500/30 backdrop-blur-sm duration-300 ease-out group-hover:backdrop-blur-xl" />
+                <div className="absolute -inset-px bg-slate-500/30 backdrop-blur-sm duration-300 ease-out group-hover:backdrop-blur-xl" />
 
                 <div className="relative z-10">
                   <p className="text-xs font-medium uppercase tracking-[0.2em] text-slate-400">
@@ -125,10 +125,12 @@ export default function Home() {
           })}
         </div>
 
-        <div>
+        <div className="">
           <Link
             href="/portfolio"
-            className="inline-flex items-center text-sm font-medium text-slate-900 transition-opacity hover:opacity-70"
+            className="inline-flex items-center text-sm font-medium px-12 py-6 bg-amber-50 text-slate-900
+            hover:pl-24 transition-[padding] ease-out
+            [clip-path:polygon(0_0,100%_0,100%_0%,85%_50%,100%_100%,100%_100%,0_100%)]"
           >
             View all projects
           </Link>
