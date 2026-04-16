@@ -6,8 +6,10 @@ export const projectData = {
     duration: "-",
     technologies: ["Unity", "C#", "Autodesk Maya"],
     images: {
-      image1: "/imports/UfoGut.png",
-      image2: "/imports/Ufo2Gut.png",
+      image1: "/imports/EscapeMePoster.png",
+    },
+    videos: {
+      video: "/imports/05-EscapeMe.mp4",
     },
     sections: {
       overview: "-",

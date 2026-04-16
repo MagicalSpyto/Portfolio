@@ -1,6 +1,6 @@
 export const projectData = {
     title: "Animation",
-    subtitle: "",
+    subtitle: "comming soon",
     description: "-",
     thumbnail: "/imports/Manequin.png",
     duration: "-",

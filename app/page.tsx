@@ -38,7 +38,7 @@ export default function Home() {
               About me
             </p>
             <p className="mt-4 text-sm leading-7 text-slate-50">
-              Im based in Germany and currently looking for work opportunities in a creative and collaborative environment. I am open to roles that allow me to leverage my skills in design and developement.
+              I am based in Germany and am currently seeking work opportunities within a creative and collaborative environment. I am open to roles that would allow me to utilise my design and development skills.
             </p>
             <div className="mt-6 text-sm font-medium text-slate-700">
               <p className="text-sm font-medium uppercase tracking-[0.2em] text-slate-50">
