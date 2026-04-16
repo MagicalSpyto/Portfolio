@@ -5,6 +5,13 @@
     thumbnail: "/imports/PointcloudImage.png",
     duration: "3 Months",
     technologies: ["Unreal Engine", "C++", "COLMAP", "OpenXR"],
+    images: {
+      image1: "/imports/cameraPositions.png",
+      image2: "/imports/BaseLineResult.png",
+      densePointCloud: "/imports/densePointCloud.png",
+      sparsePointCloud: "/imports/sparsePointCloud.png",
+
+    },
     sections: {
       overview: "The project aimed to enable multiple AR devices to scan and reconstruct a shared environment, allowing for collaborative interactions in augmented reality. The system was designed to capture data from multiple devices, process it to create a unified 3D point cloud of the environment, and facilitate real-time interactions between users within the reconstructed space.",
       objectives: "Enable multiple AR devices to scan and reconstruct a shared environment, allowing for collaborative interactions in augmented reality.",

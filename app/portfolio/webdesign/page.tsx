@@ -2,7 +2,7 @@ import { projectData } from "@/app/data/WebDesignProject";
 
 export default function WebDesignProject() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-purple-50 to-white">
+    <div className="min-h-screen bg-gradient-to-b from-emerald-50 to-white">
       {/* Hero Section */}
       <div className="relative py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
@@ -48,7 +48,12 @@ export default function WebDesignProject() {
           </div>
         </div>
       </div>
-
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-7xl mx-auto px-12 py-6 bg-amber-200 rounded-2xl">
+        <img src={projectData.images.shorts1} alt={projectData.title} />
+        <img src={projectData.images.shorts2} alt={projectData.title} />
+        <img src={projectData.images.shorts3} alt={projectData.title} />
+        <img src={projectData.images.shorts4} alt={projectData.title} />
+      </div>
       {/* Content Sections */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="space-y-12">
