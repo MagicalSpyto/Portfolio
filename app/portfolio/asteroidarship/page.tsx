@@ -64,7 +64,7 @@ export default function AsteroidARShip() {
           <section>
             <h2 className="heading-h2 mb-4">Objectives</h2>
             <p className="body-text">
-              {projectData.sections.objectives}
+              {/*projectData.sections.objectives*/}
             </p>
           </section>
 
@@ -80,7 +80,7 @@ export default function AsteroidARShip() {
           <section>
             <h2 className="heading-h2 mb-4">Results</h2>
             <p className="body-text">
-              {projectData.sections.results}
+              {/*projectData.sections.results*/}
             </p>
           </section>
         </div>
