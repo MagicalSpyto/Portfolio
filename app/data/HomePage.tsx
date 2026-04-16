@@ -49,7 +49,7 @@ export const homeData = {
         title: "Make the next step obvious",
         description:
             "Add a short invitation line, your preferred contact method, and any important links such as CV, LinkedIn, GitHub, or email.",
-        primary: "Placeholder: your.email@example.com",
-        secondary: "Placeholder: LinkedIn / GitHub / CV",
+        primary: "hello.ededust@gmail.com",
+        secondary: "https://www.linkedin.com/in/ede-dust-796584260 ",
     },
 };

@@ -49,7 +49,15 @@ export default function Home() {
                   {homeData.contact.primary}
                 </span>
                 <span className="rounded-full bg-white px-4 py-2 ring-1 ring-slate-200 shadow-xl">
-                  {homeData.contact.secondary}
+                  <a
+                    href={homeData.contact.secondary}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2"
+                  >
+                    <img src="/imports/linkedin.svg" alt="LinkedIn" className="h-4 w-4" />
+                    <span>Ede Dust</span>
+                  </a>
                 </span>
               </div>
             </div>
@@ -62,7 +70,7 @@ export default function Home() {
 
       </div>
       {/* Selected work: uses dynamic project data*/}
-      <section id="selected-work" className="grid gap-8 pt-8 mx-auto bg-gradient-to-b from-slate-950 to-slate-900/0">
+      <section id="selected-work" className="grid gap-8 pt-8 mx-auto w-full bg-gradient-to-b from-slate-950 to-slate-900/0">
         <div className="max-w-3xl px-12 mx-auto">
           <p className="mb-3 text-sm font-medium uppercase tracking-[0.2em] text-slate-400">
             {homeData.selectedWork.eyebrow}
@@ -75,7 +83,7 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-2 px-12">
+        <div className="grid gap-4 md:grid-cols-2 px-12 max-w-7xl mx-auto">
           {projects.map((project) => {
             // Each slug is resolved to the detailed project content used by the portfolio pages.
             const data = projectDataMap[project.slug as keyof typeof projectDataMap];
@@ -128,7 +136,7 @@ export default function Home() {
         <div className="">
           <Link
             href="/portfolio"
-            className="inline-flex items-center text-sm font-medium px-12 py-6 bg-amber-50 text-slate-900
+            className="inline-flex items-center text-sm font-medium px-12 py-6 bg-slate-50 text-slate-900
             hover:pl-24 transition-[padding] ease-out
             [clip-path:polygon(0_0,100%_0,100%_0%,85%_50%,100%_100%,100%_100%,0_100%)]"
           >
@@ -138,7 +146,7 @@ export default function Home() {
       </section>
 
       {/* Technical focus: grouped capability areas instead of a long skill list. */}
-      <section className="grid gap-8 max-w-7xl mx-auto pb-8">
+      <section className="grid gap-8 max-w-7xl px-12 mx-auto pb-8">
         <div className="max-w-3xl">
           <p className="mb-3 text-sm font-medium uppercase tracking-[0.2em] text-slate-500">
             {homeData.technicalFocus.eyebrow}
@@ -185,9 +193,13 @@ export default function Home() {
             <p className="text-xs font-medium uppercase tracking-[0.2em] text-slate-400">
               Supporting links
             </p>
-            <p className="mt-3 text-sm text-slate-700">
+            <a href={homeData.contact.secondary} 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-3 block text-sm text-slate-700"
+            >
               {homeData.contact.secondary}
-            </p>
+            </a>
           </div>
         </div>
       </section>
