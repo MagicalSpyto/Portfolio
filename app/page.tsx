@@ -83,7 +83,7 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-2 px-12 max-w-7xl mx-auto">
+        <div className="grid gap-4 md:grid-cols-2 px-6 max-w-7xl mx-auto">
           {projects.map((project) => {
             // Each slug is resolved to the detailed project content used by the portfolio pages.
             const data = projectDataMap[project.slug as keyof typeof projectDataMap];
@@ -136,17 +136,19 @@ export default function Home() {
         <div className="">
           <Link
             href="/portfolio"
-            className="inline-flex items-center text-sm font-medium px-12 py-6 bg-slate-50 text-slate-900
-            hover:pl-24 transition-[padding] ease-out
+            className="inline-flex items-center text-sm font-medium px-24 py-6 bg-slate-50 text-slate-900
+            hover:pl-48 transition-[padding] ease-out
             [clip-path:polygon(0_0,100%_0,100%_0%,85%_50%,100%_100%,100%_100%,0_100%)]"
           >
             View all projects
           </Link>
         </div>
       </section>
-
+      <div className="pt-10 pb-6 px-12">
+          <div className="border-t-3 border-slate-800/30 max-w-8xl mx-auto"></div>
+      </div>
       {/* Technical focus: grouped capability areas instead of a long skill list. */}
-      <section className="grid gap-8 max-w-7xl px-12 mx-auto pb-8">
+      <section className="grid gap-8 max-w-7xl px-6 mx-auto pb-8 ">
         <div className="max-w-3xl">
           <p className="mb-3 text-sm font-medium uppercase tracking-[0.2em] text-slate-500">
             {homeData.technicalFocus.eyebrow}
