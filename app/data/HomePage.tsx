@@ -19,7 +19,7 @@ export const homeData = {
     // These items should describe capability areas rather than isolated tools.
     technicalFocus: {
         eyebrow: "Technical focus",
-        title: "What I bring to the table",
+        title: "A bit about my experience and skillset",
         items: [
             {
                 title: "Creative frontend",

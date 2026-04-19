@@ -23,8 +23,8 @@ export default function Portfolio() {
       {/* Header */}
       <div className="relative py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto">
-          <h1 className="heading-h1 mb-4">Portfolio</h1>
-          <p className="body-text">
+          <h1 className="heading-h1 mb-4 !text-slate-100">Portfolio</h1>
+          <p className="body-text !text-slate-100">
             A collection of projects showcasing my design and development expertise.
           </p>
         </div>
