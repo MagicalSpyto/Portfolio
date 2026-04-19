@@ -2,24 +2,24 @@ import { projectData } from "@/app/data/WebDesignProject";
 
 export default function WebDesignProject() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-emerald-50 to-emerald-100">
+    <div className="min-h-screen bg-gradient-to-b from-cyan-900 to-amber-100">
       {/* Hero Section */}
       <div className="relative py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
-          <h1 className="heading-h1 mb-4">
+          <h1 className="heading-h1 mb-4 !text-amber-50">
             {projectData.title}
           </h1>
-          <p className="subtitle mb-6">
+          <p className="subtitle mb-6 !text-amber-50">
             {projectData.subtitle}
           </p>
-          <p className="body-text mb-8">
+          <p className="body-text mb-8 !text-amber-50">
             {projectData.description}
           </p>
         </div>
       </div>
 
       {/* Project Info */}
-      <div className="bg-white border-y border-gray-200">
+      <div className="bg-amber-50 border-y border-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div>
@@ -48,7 +48,7 @@ export default function WebDesignProject() {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-7xl mx-auto px-12 py-6 bg-amber-200 rounded-2xl">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-7xl mx-auto px-6 py-6 bg-amber-50">
         <img src={projectData.images.shorts1} alt={projectData.title} />
         <img src={projectData.images.shorts2} alt={projectData.title} />
         <img src={projectData.images.shorts3} alt={projectData.title} />
@@ -59,32 +59,32 @@ export default function WebDesignProject() {
         <div className="space-y-12">
           {/* Overview */}
           <section>
-            <h2 className="heading-h2 mb-4">Overview</h2>
-            <p className="body-text">
+            <h2 className="heading-h2 mb-4 !text-white mix-blend-difference">Overview</h2>
+            <p className="body-text !text-white mix-blend-difference">
               {projectData.sections.overview}
             </p>
           </section>
 
           {/* Objectives */}
           <section>
-            <h2 className="heading-h2 mb-4">Objectives</h2>
-            <p className="body-text">
+            <h2 className="heading-h2 mb-4 !text-white mix-blend-difference">Objectives</h2>
+            <p className="body-text !text-white mix-blend-difference">
               {projectData.sections.objectives}
             </p>
           </section>
 
           {/* Challenges */}
           <section>
-            <h2 className="heading-h2 mb-4">Challenges</h2>
-            <p className="body-text">
+            <h2 className="heading-h2 mb-4 !text-white mix-blend-difference">Challenges</h2>
+            <p className="body-text !text-white mix-blend-difference">
               {projectData.sections.challenges}
             </p>
           </section>
 
           {/* Results */}
           <section>
-            <h2 className="heading-h2 mb-4">Results</h2>
-            <p className="body-text">
+            <h2 className="heading-h2 mb-4 !text-white mix-blend-difference">Results</h2>
+            <p className="body-text !text-white mix-blend-difference">
               {projectData.sections.results}
             </p>
           </section>

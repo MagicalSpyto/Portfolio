@@ -27,7 +27,7 @@ export default function SpaceTacos() {
       </div>
 
       {/* Project Info */}
-      <div className="bg-white border-y border-gray-200">
+      <div className="bg-red-50 border-y border-gray-200">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div>
@@ -46,7 +46,7 @@ export default function SpaceTacos() {
                 {projectData.technologies.map((tech, index) => (
                   <span
                     key={index}
-                    className="px-4 py-2 bg-purple-100 text-purple-800 rounded-full text-sm font-medium"
+                    className="px-4 py-2 bg-red-100 text-red-800 rounded-full text-sm font-medium"
                   >
                     {tech}
                   </span>

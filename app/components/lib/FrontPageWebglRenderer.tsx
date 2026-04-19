@@ -48,7 +48,7 @@ export default function FrontPageWebglRenderer() {
     <canvas
       ref={canvasRef}
       aria-hidden="true"
-      className="h-full w-full bg-slate-900"
+      className="h-full w-full bg-gradient-to-br from-cyan-800 to-slate-900"
     />
   );
 }

@@ -70,7 +70,7 @@ export default function Home() {
 
       </div>
       {/* Selected work: uses dynamic project data*/}
-      <section id="selected-work" className="grid gap-8 pt-8 mx-auto w-full bg-gradient-to-b from-slate-950 to-slate-900/0">
+      <section id="selected-work" className="grid gap-8 pt-8 mx-auto w-full bg-gradient-to-b from-slate-900 to-slate-900/0">
         <div className="max-w-3xl px-12 mx-auto">
           <p className="mb-3 text-sm font-medium uppercase tracking-[0.2em] text-slate-400">
             {homeData.selectedWork.eyebrow}
