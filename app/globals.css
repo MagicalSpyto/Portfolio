@@ -1,12 +1,12 @@
 @import "tailwindcss";
 
 :root {
-  --site-background: #475153;
+  --site-background: ;
 }
 
 html,
 body {
-  background-color: var(--color-slate-700);
+  background-color: var(--color-cyan-900);
 }
 
 /* Typography - Headings */

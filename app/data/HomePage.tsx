@@ -2,7 +2,7 @@ export const homeData = {
     // Hero content is the first thing visitors see on the homepage.
     hero: {
         title: "Hi, I'm Ede",
-        subtitle: "Mediendesigninformatiker",
+        subtitle: "Frontend Developer (Interactive Experiences)",
         description:
             "interactive and engaging digital experiences, ranging from web development to immersive AR applications.",
         primaryCta: "View selected work",
