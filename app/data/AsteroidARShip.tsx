@@ -8,6 +8,7 @@ export const projectData = {
     images: {
       image1: "/imports/UfoGut.png",
       image2: "/imports/Ufo2Gut.png",
+      image3: "/imports/asteroidGut.png",
     },
     sections: {
       overview: "This project involved planning around the unique environment presented by the university's facilities and learning and implementing the necessary technology to realise the project concept. In our vision, we aimed to utilise the extensive open spaces provided by the university's atrium to create a large-scale AR experience that interacts with the real world as it is perceived.",

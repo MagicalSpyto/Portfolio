@@ -137,7 +137,7 @@ export default function Home() {
           <Link
             href="/portfolio"
             className="inline-flex items-center text-sm font-medium px-24 py-6 bg-slate-50 text-slate-900
-            hover:pl-48 transition-[padding] ease-out
+            hover:pl-48 active:pl-40 transition-[padding] ease-out
             [clip-path:polygon(0_0,100%_0,100%_0%,85%_50%,100%_100%,100%_100%,0_100%)]"
           >
             View all projects
