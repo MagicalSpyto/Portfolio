@@ -38,19 +38,19 @@ export default function AsteroidARShip() {
     }
   };
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-800 to-rose-200">
+    <div className="min-h-screen bg-gradient-to-b from-gray-800 to-violet-100">
       {/* Hero Section */}
       <div className="relative py-32 px-4 sm:px-6 lg:px-8 overflow-hidden">
         <div className="absolute inset-0 h-full w-full">
         </div>
         <div className="relative z-10 max-w-4xl mx-auto">
-          <h1 className="heading-h1 mb-4 text-rose-50!">
+          <h1 className="heading-h1 mb-4 text-violet-50!">
             {projectData.title}
           </h1>
-          <p className="subtitle mb-6 text-rose-50!">
+          <p className="subtitle mb-6 text-violet-50!">
             {projectData.subtitle}
           </p>
-          <p className="body-text mb-8 text-rose-50!">
+          <p className="body-text mb-8 text-violet-50!">
             {projectData.description}
           </p>
         </div>
@@ -75,7 +75,7 @@ export default function AsteroidARShip() {
                 {projectData.technologies.map((tech, index) => (
                   <span
                     key={index}
-                    className="px-4 py-2 bg-rose-100 text-rose-800 rounded-full text-sm font-medium"
+                    className="px-4 py-2 bg-violet-100 text-violet-800 rounded-full text-sm font-medium"
                   >
                     {tech}
                   </span>
@@ -153,7 +153,7 @@ export default function AsteroidARShip() {
 
           {/* Objectives */}
           <section>
-            <h2 className="heading-h2 mb-4">Objectives</h2>
+            {/* <h2 className="heading-h2 mb-4">Objectives</h2> */}
             <p className="body-text">
               {/*projectData.sections.objectives*/}
             </p>
@@ -169,7 +169,7 @@ export default function AsteroidARShip() {
 
           {/* Results */}
           <section>
-            <h2 className="heading-h2 mb-4">Results</h2>
+            {/* <h2 className="heading-h2 mb-4">Results</h2> */}
             <p className="body-text">
               {/*projectData.sections.results*/}
             </p>
