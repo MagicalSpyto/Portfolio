@@ -6,7 +6,7 @@ export const projectData = {
     duration: "3 months",
     technologies: ["Unity", "Apple ARKit", "C#", "Autodesk Maya"],
     images: {
-      image1: "/imports/UfoGut.png",
+      image1: "/imports/ufoGut.png",
       image2: "/imports/Ufo2Gut.png",
       image3: "/imports/asteroidGut.png",
     },
